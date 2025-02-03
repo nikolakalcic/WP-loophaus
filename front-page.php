@@ -12,8 +12,12 @@ get_header(); ?>
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1><?php echo get_theme_mod('hero_title', 'Eco Building Materials'); ?></h1>
-                <p><?php echo get_theme_mod('hero_subtitle', 'Sustainable solutions for modern construction'); ?></p>
+                <h1><?php echo get_theme_mod('hero_title', 'Discover Sustainable Building Materials'); ?></h1>
+                <p class="hero-subtitle"><?php echo get_theme_mod('hero_subtitle', 'Your trusted source for eco-friendly construction solutions'); ?></p>
+                <div class="hero-buttons">
+                    <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="btn btn-primary">Shop Now</a>
+                    <a href="<?php echo esc_url(get_permalink(get_page_by_path('about-us'))); ?>" class="btn btn-outline">Learn More</a>
+                </div>
             </div>
         </div>
     </section>
@@ -21,24 +25,37 @@ get_header(); ?>
     <!-- Featured Categories -->
     <section class="featured-categories">
         <div class="container">
+            <h2 class="section-title">Featured Categories</h2>
             <div class="category-grid">
                 <?php
-                $categories = get_terms([
+                $featured_categories = get_terms([
                     'taxonomy' => 'product_cat',
-                    'hide_empty' => false,
-                    'number' => 3
+                    'number' => 3,
+                    'parent' => 0,
+                    'meta_query' => [
+                        [
+                            'key' => 'featured',
+                            'value' => 'yes'
+                        ]
+                    ]
                 ]);
 
-                foreach ($categories as $category) :
+                foreach ($featured_categories as $category) :
                     $thumbnail_id = get_term_meta($category->term_id, 'thumbnail_id', true);
                     $image = wp_get_attachment_url($thumbnail_id);
+                    $category_link = get_term_link($category, 'product_cat');
                 ?>
-                    <div class="category-card">
-                        <?php if ($image) : ?>
-                            <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($category->name); ?>">
-                        <?php endif; ?>
-                        <h3><?php echo esc_html($category->name); ?></h3>
-                    </div>
+                    <a href="<?php echo esc_url($category_link); ?>" class="category-card">
+                        <div class="category-image">
+                            <?php if ($image) : ?>
+                                <img src="<?php echo esc_url($image); ?>" alt="<?php echo esc_attr($category->name); ?>">
+                            <?php endif; ?>
+                        </div>
+                        <div class="category-content">
+                            <h3><?php echo esc_html($category->name); ?></h3>
+                            <span class="category-link">View Products</span>
+                        </div>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -47,7 +64,7 @@ get_header(); ?>
     <!-- Recently Added Products -->
     <section class="recent-products">
         <div class="container">
-            <h2>Recently Added Products</h2>
+            <h2 class="section-title">Recently Added Products</h2>
             <div class="product-grid">
                 <?php
                 $args = array(
@@ -61,11 +78,35 @@ get_header(); ?>
                 
                 if ($products->have_posts()) :
                     while ($products->have_posts()) : $products->the_post();
-                        wc_get_template_part('content', 'product');
-                    endwhile;
-                endif;
-                wp_reset_postdata();
+                        global $product;
                 ?>
+                    <div class="product-card">
+                        <a href="<?php the_permalink(); ?>" class="product-link">
+                            <div class="product-image">
+                                <?php echo woocommerce_get_product_thumbnail('woocommerce_thumbnail'); ?>
+                                <div class="product-overlay">
+                                    <span class="view-product">View Product</span>
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title"><?php the_title(); ?></h3>
+                                <div class="product-price"><?php echo $product->get_price_html(); ?></div>
+                                <?php if ($product->is_in_stock()) : ?>
+                                    <div class="product-stock in-stock">In Stock</div>
+                                <?php else : ?>
+                                    <div class="product-stock out-of-stock">Out of Stock</div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php 
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
+            </div>
+            <div class="section-footer">
+                <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="btn btn-outline-dark">View All Products</a>
             </div>
         </div>
     </section>
@@ -73,7 +114,7 @@ get_header(); ?>
     <!-- Featured Products -->
     <section class="featured-products">
         <div class="container">
-            <h2>Featured Products</h2>
+            <h2 class="section-title">Featured Products</h2>
             <div class="product-grid">
                 <?php
                 $args = array(
@@ -92,11 +133,35 @@ get_header(); ?>
                 
                 if ($products->have_posts()) :
                     while ($products->have_posts()) : $products->the_post();
-                        wc_get_template_part('content', 'product');
-                    endwhile;
-                endif;
-                wp_reset_postdata();
+                        global $product;
                 ?>
+                    <div class="product-card">
+                        <a href="<?php the_permalink(); ?>" class="product-link">
+                            <div class="product-image">
+                                <?php echo woocommerce_get_product_thumbnail('woocommerce_thumbnail'); ?>
+                                <div class="product-overlay">
+                                    <span class="view-product">View Product</span>
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title"><?php the_title(); ?></h3>
+                                <div class="product-price"><?php echo $product->get_price_html(); ?></div>
+                                <?php if ($product->is_in_stock()) : ?>
+                                    <div class="product-stock in-stock">In Stock</div>
+                                <?php else : ?>
+                                    <div class="product-stock out-of-stock">Out of Stock</div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                    </div>
+                <?php 
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
+            </div>
+            <div class="section-footer">
+                <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="btn btn-outline-dark">View All Featured</a>
             </div>
         </div>
     </section>
@@ -104,17 +169,20 @@ get_header(); ?>
     <!-- About Section -->
     <section class="about-section">
         <div class="container">
-            <div class="about-content">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title"><?php echo get_theme_mod('about_section_title', 'About Loophaus'); ?></h2>
+                    <div class="about-text">
+                        <?php echo wpautop(get_theme_mod('about_section_text', 'Your trusted source for eco-friendly building materials.')); ?>
+                    </div>
+                    <a href="<?php echo esc_url(get_permalink(get_page_by_path('about-us'))); ?>" class="btn btn-outline-dark">Learn More</a>
+                </div>
                 <div class="about-image">
                     <?php 
                     $about_image = get_theme_mod('about_section_image');
                     if ($about_image) : ?>
                         <img src="<?php echo esc_url($about_image); ?>" alt="About Loophaus">
                     <?php endif; ?>
-                </div>
-                <div class="about-text">
-                    <h2><?php echo get_theme_mod('about_section_title', 'About Loophaus'); ?></h2>
-                    <p><?php echo get_theme_mod('about_section_text', 'Your trusted source for eco-friendly building materials.'); ?></p>
                 </div>
             </div>
         </div>
