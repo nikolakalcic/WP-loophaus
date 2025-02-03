@@ -122,8 +122,53 @@ function loophaus_customize_register($wp_customize) {
         'section' => 'title_tagline',
         'type' => 'textarea',
     ]);
+
+    // Logo Size Control
+    $wp_customize->add_setting('logo_size', [
+        'default' => '160',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'absint',
+    ]);
+
+    $wp_customize->add_control('logo_size', [
+        'label' => __('Logo Size (px)', 'loophaus'),
+        'section' => 'title_tagline',
+        'type' => 'number',
+        'input_attrs' => [
+            'min' => 80,
+            'max' => 300,
+            'step' => 10,
+        ],
+    ]);
+
+    // Header Background Color
+    $wp_customize->add_setting('header_bg_color', [
+        'default' => '#ffffff',
+        'transport' => 'refresh',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'header_bg_color', [
+        'label' => __('Header Background Color', 'loophaus'),
+        'section' => 'colors',
+    ]));
 }
 add_action('customize_register', 'loophaus_customize_register');
+
+// Output custom CSS
+function loophaus_customize_css() {
+    ?>
+    <style type="text/css">
+        .logo-wrapper {
+            max-width: <?php echo get_theme_mod('logo_size', '160'); ?>px;
+        }
+        .site-header {
+            background-color: <?php echo get_theme_mod('header_bg_color', '#ffffff'); ?>;
+        }
+    </style>
+    <?php
+}
+add_action('wp_head', 'loophaus_customize_css');
 
 // Add this to help debug REST API issues
 add_filter('rest_url', function($url) {

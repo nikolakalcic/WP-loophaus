@@ -14,7 +14,8 @@
             <div class="header-wrapper">
                 <!-- Logo -->
                 <div class="logo-wrapper">
-                    <?php if (has_custom_logo()) {
+                    <?php 
+                    if (has_custom_logo()) {
                         the_custom_logo();
                     } else { ?>
                         <a href="<?php echo home_url(); ?>" class="site-title">
@@ -23,7 +24,7 @@
                     <?php } ?>
                 </div>
                 
-                <!-- Main Navigation -->
+                <!-- Navigation -->
                 <nav class="main-navigation">
                     <?php
                     wp_nav_menu([
@@ -34,13 +35,16 @@
                     ?>
                 </nav>
 
-                <!-- Search and Actions -->
+                <!-- Search -->
+                <div class="header-search">
+                    <form role="search" method="get" class="search-form" action="<?php echo home_url('/'); ?>">
+                        <input type="search" class="search-field" placeholder="Search products..." value="<?php echo get_search_query(); ?>" name="s">
+                        <input type="hidden" name="post_type" value="product">
+                    </form>
+                </div>
+
+                <!-- Actions -->
                 <div class="header-actions">
-                    <button class="search-toggle">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                        </svg>
-                    </button>
                     <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="account-link">
                         <svg width="24" height="24" viewBox="0 0 24 24">
                             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
@@ -53,21 +57,6 @@
                         <span class="cart-count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                     </a>
                 </div>
-
-                <!-- Mobile Menu Toggle -->
-                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-
-            <!-- Search Form Overlay -->
-            <div class="search-overlay">
-                <form role="search" method="get" class="search-form" action="<?php echo home_url('/'); ?>">
-                    <input type="search" class="search-field" placeholder="Search..." value="<?php echo get_search_query(); ?>" name="s">
-                    <button type="submit" class="search-submit">Search</button>
-                </form>
             </div>
         </div>
     </header>
