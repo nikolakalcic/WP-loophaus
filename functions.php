@@ -2,6 +2,19 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
+// Enable error logging
+if (!function_exists('write_log')) {
+    function write_log($log) {
+        if (true === WP_DEBUG) {
+            if (is_array($log) || is_object($log)) {
+                error_log(print_r($log, true));
+            } else {
+                error_log($log);
+            }
+        }
+    }
+}
+
 function loophaus_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
@@ -111,3 +124,9 @@ function loophaus_customize_register($wp_customize) {
     ]);
 }
 add_action('customize_register', 'loophaus_customize_register');
+
+// Add this to help debug REST API issues
+add_filter('rest_url', function($url) {
+    write_log('REST URL: ' . $url);
+    return $url;
+});
