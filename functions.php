@@ -30,6 +30,7 @@ function loophaus_enqueue() {
     
     // Scripts
     wp_enqueue_script('loophaus-navigation', get_template_directory_uri() . '/assets/js/navigation.js', [], '1.0', true);
+    wp_enqueue_script('loophaus-main', get_template_directory_uri() . '/assets/js/main.js', [], '1.0', true);
     
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
@@ -51,3 +52,62 @@ add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 // Add custom image sizes
 add_image_size('loophaus-featured', 800, 600, true);
 add_image_size('loophaus-thumbnail', 400, 300, true);
+
+function loophaus_customize_register($wp_customize) {
+    // Add settings and controls here
+    $wp_customize->add_setting('hero_title', [
+        'default' => 'Eco Building Materials',
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+
+    $wp_customize->add_control('hero_title', [
+        'label' => __('Hero Title', 'loophaus'),
+        'section' => 'title_tagline',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('hero_subtitle', [
+        'default' => 'Sustainable solutions for modern construction',
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+
+    $wp_customize->add_control('hero_subtitle', [
+        'label' => __('Hero Subtitle', 'loophaus'),
+        'section' => 'title_tagline',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('about_section_image', [
+        'default' => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'about_section_image', [
+        'label' => __('About Section Image', 'loophaus'),
+        'section' => 'title_tagline',
+        'settings' => 'about_section_image',
+    ]));
+
+    $wp_customize->add_setting('about_section_title', [
+        'default' => 'About Loophaus',
+        'sanitize_callback' => 'sanitize_text_field',
+    ]);
+
+    $wp_customize->add_control('about_section_title', [
+        'label' => __('About Section Title', 'loophaus'),
+        'section' => 'title_tagline',
+        'type' => 'text',
+    ]);
+
+    $wp_customize->add_setting('about_section_text', [
+        'default' => 'Your trusted source for eco-friendly building materials.',
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ]);
+
+    $wp_customize->add_control('about_section_text', [
+        'label' => __('About Section Text', 'loophaus'),
+        'section' => 'title_tagline',
+        'type' => 'textarea',
+    ]);
+}
+add_action('customize_register', 'loophaus_customize_register');

@@ -7,7 +7,7 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-    <?php wp_body_open(); ?>
+    <?php if (function_exists('wp_body_open')) { wp_body_open(); } ?>
     <header class="site-header">
         <div class="container">
             <div class="header-wrapper">
@@ -53,3 +53,5 @@
             </div>
         </div>
     </header>
+</body>
+</html>
