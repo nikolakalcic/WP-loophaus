@@ -18,12 +18,12 @@ if (!function_exists('write_log')) {
 function loophaus_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
-    add_theme_support('custom-logo', [
-        'height'      => 100,
-        'width'       => 400,
+    add_theme_support('custom-logo', array(
+        'height'      => 40,
+        'width'       => 160,
         'flex-height' => true,
         'flex-width'  => true,
-    ]);
+    ));
     add_theme_support('woocommerce');
     add_theme_support('wc-product-gallery-zoom');
     add_theme_support('wc-product-gallery-lightbox');

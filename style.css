@@ -458,13 +458,24 @@ Text Domain: loophaus
 
 /* Logo */
 .logo-wrapper {
-    max-width: 160px; /* Adjust this value to control logo size */
+    max-width: 160px;
 }
 
 .custom-logo {
     width: 100%;
     height: auto;
     display: block;
+}
+
+.site-title {
+    display: block;
+    width: 160px;
+    height: 40px;
+    background-image: url('images/Logo-a-slogan_bold-1c5ae0.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-indent: -9999px; /* Hide text while keeping it accessible */
 }
 
 /* Navigation */

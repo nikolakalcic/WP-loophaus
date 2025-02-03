@@ -15,11 +15,40 @@ get_header(); ?>
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1><?php echo pll__('Discover Sustainable Building Materials'); ?></h1>
-                <p class="hero-subtitle"><?php echo pll__('Your trusted source for eco-friendly construction solutions'); ?></p>
+                <h1><?php 
+                    if (function_exists('pll__')) {
+                        echo pll__('Discover Sustainable Building Materials');
+                    } else {
+                        echo get_theme_mod('hero_title', 'Discover Sustainable Building Materials');
+                    }
+                ?></h1>
+                <p class="hero-subtitle"><?php 
+                    if (function_exists('pll__')) {
+                        echo pll__('Your trusted source for eco-friendly construction solutions');
+                    } else {
+                        echo get_theme_mod('hero_subtitle', 'Your trusted source for eco-friendly construction solutions');
+                    }
+                ?></p>
                 <div class="hero-buttons">
-                    <a href="<?php echo esc_url(get_permalink(pll_get_post(wc_get_page_id('shop')))); ?>" class="btn btn-primary"><?php echo pll__('Shop Now'); ?></a>
-                    <a href="<?php echo esc_url(get_permalink(pll_get_post(get_page_by_path('about-us')->ID))); ?>" class="btn btn-outline"><?php echo pll__('Learn More'); ?></a>
+                    <a href="<?php 
+                        if (function_exists('pll_get_post')) {
+                            echo esc_url(get_permalink(pll_get_post(wc_get_page_id('shop'))));
+                        } else {
+                            echo esc_url(get_permalink(wc_get_page_id('shop')));
+                        }
+                    ?>" class="btn btn-primary"><?php 
+                        echo function_exists('pll__') ? pll__('Shop Now') : 'Shop Now';
+                    ?></a>
+                    <a href="<?php 
+                        $about_page = get_page_by_path('about-us');
+                        if ($about_page && function_exists('pll_get_post')) {
+                            echo esc_url(get_permalink(pll_get_post($about_page->ID)));
+                        } elseif ($about_page) {
+                            echo esc_url(get_permalink($about_page->ID));
+                        }
+                    ?>" class="btn btn-outline"><?php 
+                        echo function_exists('pll__') ? pll__('Learn More') : 'Learn More';
+                    ?></a>
                 </div>
             </div>
         </div>
