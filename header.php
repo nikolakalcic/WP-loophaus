@@ -43,6 +43,19 @@
                     </form>
                 </div>
 
+                <!-- Before the header-actions div -->
+                <?php if (function_exists('pll_the_languages')) : ?>
+                    <div class="language-switcher">
+                        <ul class="languages-list">
+                            <?php pll_the_languages([
+                                'show_flags' => 1,
+                                'show_names' => 1,
+                                'dropdown' => 0
+                            ]); ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Actions -->
                 <div class="header-actions">
                     <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="account-link">

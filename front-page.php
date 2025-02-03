@@ -15,11 +15,11 @@ get_header(); ?>
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1><?php echo get_theme_mod('hero_title', 'Discover Sustainable Building Materials'); ?></h1>
-                <p class="hero-subtitle"><?php echo get_theme_mod('hero_subtitle', 'Your trusted source for eco-friendly construction solutions'); ?></p>
+                <h1><?php echo pll__('Discover Sustainable Building Materials'); ?></h1>
+                <p class="hero-subtitle"><?php echo pll__('Your trusted source for eco-friendly construction solutions'); ?></p>
                 <div class="hero-buttons">
-                    <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" class="btn btn-primary">Shop Now</a>
-                    <a href="<?php echo esc_url(get_permalink(get_page_by_path('about-us'))); ?>" class="btn btn-outline">Learn More</a>
+                    <a href="<?php echo esc_url(get_permalink(pll_get_post(wc_get_page_id('shop')))); ?>" class="btn btn-primary"><?php echo pll__('Shop Now'); ?></a>
+                    <a href="<?php echo esc_url(get_permalink(pll_get_post(get_page_by_path('about-us')->ID))); ?>" class="btn btn-outline"><?php echo pll__('Learn More'); ?></a>
                 </div>
             </div>
         </div>

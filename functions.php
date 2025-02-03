@@ -175,3 +175,22 @@ add_filter('rest_url', function($url) {
     write_log('REST URL: ' . $url);
     return $url;
 });
+
+// Add after loophaus_setup function
+function loophaus_polylang_support() {
+    // Register strings for translation
+    if (function_exists('pll_register_string')) {
+        pll_register_string('loophaus-hero-title', 'Discover Sustainable Building Materials', 'Loophaus Theme');
+        pll_register_string('loophaus-hero-subtitle', 'Your trusted source for eco-friendly construction solutions', 'Loophaus Theme');
+        pll_register_string('loophaus-shop-now', 'Shop Now', 'Loophaus Theme');
+        pll_register_string('loophaus-learn-more', 'Learn More', 'Loophaus Theme');
+        pll_register_string('loophaus-featured-categories', 'Featured Categories', 'Loophaus Theme');
+        pll_register_string('loophaus-view-products', 'View Products', 'Loophaus Theme');
+        pll_register_string('loophaus-recent-products', 'Recently Added Products', 'Loophaus Theme');
+        pll_register_string('loophaus-featured-products', 'Featured Products', 'Loophaus Theme');
+        pll_register_string('loophaus-view-all', 'View All Products', 'Loophaus Theme');
+        pll_register_string('loophaus-about-title', 'About Loophaus', 'Loophaus Theme');
+        pll_register_string('loophaus-search-placeholder', 'Search products...', 'Loophaus Theme');
+    }
+}
+add_action('after_setup_theme', 'loophaus_polylang_support');

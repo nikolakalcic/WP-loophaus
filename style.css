@@ -451,7 +451,7 @@ Text Domain: loophaus
 
 .header-wrapper {
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto auto auto;
     align-items: center;
     gap: 2rem;
 }
@@ -636,5 +636,69 @@ Text Domain: loophaus
     
     .header-actions {
         gap: 1rem;
+    }
+}
+
+/* Language Switcher */
+.language-switcher {
+    margin-right: 1rem;
+}
+
+.languages-list {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.languages-list li {
+    display: flex;
+    align-items: center;
+}
+
+.languages-list a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.languages-list a:hover {
+    color: var(--color-accent);
+}
+
+.languages-list img {
+    width: 20px;
+    height: auto;
+    border-radius: 2px;
+}
+
+.languages-list .current-lang a {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+/* Update header grid for language switcher */
+.header-wrapper {
+    grid-template-columns: auto 1fr auto auto auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .language-switcher {
+        order: 2;
+    }
+    
+    .languages-list {
+        gap: 0.5rem;
+    }
+    
+    .languages-list span {
+        display: none;
     }
 }
