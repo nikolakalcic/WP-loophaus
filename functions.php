@@ -1,4 +1,3 @@
-/* functions.php */
 <?php
 if (!defined('ABSPATH')) exit;
 
@@ -40,6 +39,7 @@ function loophaus_enqueue() {
     // Styles
     wp_enqueue_style('loophaus-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     wp_enqueue_style('loophaus-style', get_stylesheet_uri(), [], wp_get_theme()->get('Version'));
+    wp_enqueue_style('loophaus-main', get_template_directory_uri() . '/assets/css/main.css', [], wp_get_theme()->get('Version'));
     
     // Scripts
     wp_enqueue_script('loophaus-navigation', get_template_directory_uri() . '/assets/js/navigation.js', [], '1.0', true);

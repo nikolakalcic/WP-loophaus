@@ -1,5 +1,3 @@
-// filepath: /Users/nikolakalcic/Documents/git/WP-loophaus/assets/js/main.js
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Main JS loaded');
 
